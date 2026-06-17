@@ -1,10 +1,37 @@
-import { invokeFunction } from "@/lib/supabase";
+import { invokeFunction, supabase } from "@/lib/supabase";
 import type {
   ConnectAccountResponse,
   EarningsResponse,
   PaymentIntentResponse,
   RequestPayoutResponse,
 } from "@/lib/types";
+
+/**
+ * Cheap, Stripe-free estimate of cash-out-ready cents straight from the ledger
+ * (available earnings minus pending/paid payouts). Used for the home banner;
+ * the Earnings screen uses the authoritative Stripe balance via get-earnings.
+ */
+export async function getLedgerAvailableCents(userId: string): Promise<number> {
+  const { data, error } = await supabase
+    .from("payout_ledger")
+    .select("entry_type, amount_cents, status")
+    .eq("owner_id", userId);
+  if (error) throw error;
+
+  let earned = 0;
+  let paidOrPending = 0;
+  for (const row of data ?? []) {
+    if (row.entry_type === "rental_earn" && row.status === "available") {
+      earned += row.amount_cents;
+    } else if (
+      row.entry_type === "manual_payout" &&
+      (row.status === "paid" || row.status === "pending")
+    ) {
+      paidOrPending += row.amount_cents;
+    }
+  }
+  return Math.max(earned - paidOrPending, 0);
+}
 
 /** B3 — create/return rental + deposit PaymentIntents for the checkout sheet. */
 export function createPaymentIntent(

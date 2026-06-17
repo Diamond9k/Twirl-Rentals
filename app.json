@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Twirl",
+    "slug": "twirl-rentals",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "twirl",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "rentals.twirl.app",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Twirl needs access to your photos so you can list items and set a profile picture.",
+        "NSCameraUsageDescription": "Twirl needs camera access so you can photograph items you list.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "rentals.twirl.app"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Twirl needs access to your photos so you can list items and set a profile picture."
+        }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.rentals.twirl.app",
+          "enableGooglePay": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    }
+  }
+}

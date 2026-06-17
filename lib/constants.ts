@@ -65,4 +65,20 @@ export const RENTAL_STATUS_LABELS: Record<string, string> = {
 /** Currently scoped to University of Arkansas per launch plan. */
 export const DEFAULT_SCHOOL = "University of Arkansas";
 
+/** Panhellenic chapters for the chapter picker (alphabetical). */
+export const SORORITIES = [
+  "Alpha Chi Omega",
+  "Alpha Delta Pi",
+  "Alpha Omicron Pi",
+  "Chi Omega",
+  "Delta Delta Delta",
+  "Delta Gamma",
+  "Gamma Phi Beta",
+  "Kappa Alpha Theta",
+  "Kappa Delta",
+  "Kappa Kappa Gamma",
+  "Pi Beta Phi",
+  "Zeta Tau Alpha",
+] as const;
+
 export const TERMS_VERSION = "2.0";

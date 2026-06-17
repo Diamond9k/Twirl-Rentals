@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 import { colors, radius, spacing, fontSize } from "@/lib/theme";
 import { Sheet } from "@/components/ui/Sheet";
@@ -60,7 +60,7 @@ export function Select<T extends string>({
       </Pressable>
 
       <Sheet visible={open} onClose={() => setOpen(false)} title={sheetTitle ?? label}>
-        <View>
+        <ScrollView style={{ maxHeight: 420 }} showsVerticalScrollIndicator={false}>
           {options.map((opt, i) => {
             const isSelected = opt.value === value;
             return (
@@ -91,7 +91,7 @@ export function Select<T extends string>({
               </Pressable>
             );
           })}
-        </View>
+        </ScrollView>
       </Sheet>
     </View>
   );

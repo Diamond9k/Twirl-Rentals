@@ -34,7 +34,7 @@ export type ReportReason =
   | "spam"
   | "other";
 
-export interface Profile {
+export type Profile = {
   id: string;
   full_name: string;
   email: string | null;
@@ -60,7 +60,7 @@ export interface Profile {
   updated_at: string;
 }
 
-export interface Item {
+export type Item = {
   id: string;
   owner_id: string;
   title: string;
@@ -89,14 +89,14 @@ export interface ItemWithOwner extends Item {
   > | null;
 }
 
-export interface SavedItem {
+export type SavedItem = {
   id: string;
   user_id: string;
   item_id: string;
   created_at: string;
 }
 
-export interface Conversation {
+export type Conversation = {
   id: string;
   user1_id: string;
   user2_id: string;
@@ -108,7 +108,7 @@ export interface Conversation {
   created_at: string;
 }
 
-export interface Message {
+export type Message = {
   id: string;
   conversation_id: string;
   sender_id: string;
@@ -117,7 +117,7 @@ export interface Message {
   created_at: string;
 }
 
-export interface Rental {
+export type Rental = {
   id: string;
   item_id: string;
   renter_id: string;
@@ -142,7 +142,7 @@ export interface Rental {
   updated_at: string;
 }
 
-export interface Review {
+export type Review = {
   id: string;
   rental_id: string;
   reviewer_id: string;
@@ -152,7 +152,7 @@ export interface Review {
   created_at: string;
 }
 
-export interface PayoutLedgerEntry {
+export type PayoutLedgerEntry = {
   id: string;
   owner_id: string;
   rental_id: string | null;
@@ -262,9 +262,22 @@ export interface Database {
     Views: {
       recent_rentals_by_user: {
         Row: { renter_id: string; count: number };
+        Relationships: [];
       };
     };
-    Functions: Record<string, unknown>;
+    Functions: {
+      create_rental_request: {
+        Args: { p_item_id: string; p_start_date: string; p_end_date: string };
+        Returns: string;
+      };
+      approve_rental: { Args: { p_rental_id: string }; Returns: undefined };
+      decline_rental: { Args: { p_rental_id: string }; Returns: undefined };
+      cancel_rental: { Args: { p_rental_id: string }; Returns: undefined };
+      activate_rental: { Args: { p_rental_id: string }; Returns: undefined };
+      mark_rental_returned: { Args: { p_rental_id: string }; Returns: undefined };
+      mark_conversation_read: { Args: { p_conversation_id: string }; Returns: undefined };
+    };
     Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }

@@ -51,7 +51,14 @@ export async function createRentalRequest(
   return data as unknown as string;
 }
 
-async function callRentalRpc(fn: string, rentalId: string): Promise<void> {
+type RentalRpc =
+  | "approve_rental"
+  | "decline_rental"
+  | "cancel_rental"
+  | "activate_rental"
+  | "mark_rental_returned";
+
+async function callRentalRpc(fn: RentalRpc, rentalId: string): Promise<void> {
   const { error } = await supabase.rpc(fn, { p_rental_id: rentalId });
   if (error) throw error;
 }

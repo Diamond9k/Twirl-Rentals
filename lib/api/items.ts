@@ -32,7 +32,7 @@ export async function browseItems(
   }
   if (filters.occasion) query = query.eq("occasion", filters.occasion);
   if (filters.category) query = query.eq("category", filters.category);
-  if (filters.size) query = query.eq("size", filters.size);
+  if (filters.size) query = query.eq("size", filters.size as NonNullable<Item["size"]>);
   if (filters.minPrice != null) query = query.gte("price_per_day", filters.minPrice);
   if (filters.maxPrice != null) query = query.lte("price_per_day", filters.maxPrice);
 

@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, View } from "react-native";
 
@@ -81,11 +81,9 @@ export default function SignupScreen() {
 
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: spacing.xxl, gap: 4 }}>
           <Text variant="bodyMuted">Already have an account?</Text>
-          <Link href="/(auth)/login" asChild>
-            <Text variant="link" weight="semibold">
-              Log in
-            </Text>
-          </Link>
+          <Text variant="link" weight="semibold" onPress={() => router.push("/(auth)/login")}>
+            Log in
+          </Text>
         </View>
       </KeyboardAvoidingView>
     </Screen>

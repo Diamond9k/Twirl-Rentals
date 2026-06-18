@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, View } from "react-native";
 
@@ -58,22 +58,22 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
-          <Link href="/(auth)/forgot-password" asChild>
-            <Text variant="link" style={{ alignSelf: "flex-end", fontSize: fontSize.small }}>
-              Forgot password?
-            </Text>
-          </Link>
+          <Text
+            variant="link"
+            onPress={() => router.push("/(auth)/forgot-password")}
+            style={{ alignSelf: "flex-end", fontSize: fontSize.small }}
+          >
+            Forgot password?
+          </Text>
 
           <Button title="Log in" onPress={onSubmit} loading={loading} />
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: spacing.xxl, gap: 4 }}>
           <Text variant="bodyMuted">New to Twirl?</Text>
-          <Link href="/(auth)/signup" asChild>
-            <Text variant="link" weight="semibold">
-              Sign up
-            </Text>
-          </Link>
+          <Text variant="link" weight="semibold" onPress={() => router.push("/(auth)/signup")}>
+            Sign up
+          </Text>
         </View>
       </KeyboardAvoidingView>
     </Screen>

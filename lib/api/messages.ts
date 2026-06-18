@@ -109,3 +109,27 @@ export function otherParty(
 ): Pick<Profile, "id" | "full_name" | "avatar_url"> | null {
   return conv.user1_id === userId ? conv.user2 : conv.user1;
 }
+
+/** Realtime subscription for new messages in a conversation. Returns unsubscribe. */
+export function subscribeToMessages(
+  conversationId: string,
+  onInsert: (message: Message) => void,
+): () => void {
+  const channel = supabase
+    .channel(`messages:${conversationId}`)
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `conversation_id=eq.${conversationId}`,
+      },
+      (payload) => onInsert(payload.new as Message),
+    )
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}

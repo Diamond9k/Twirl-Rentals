@@ -3,6 +3,7 @@ import {
   Pressable,
   View,
   type PressableProps,
+  type ViewStyle,
 } from "react-native";
 
 import { colors, radius, fontSize } from "@/lib/theme";
@@ -18,6 +19,7 @@ interface ButtonProps extends Omit<PressableProps, "style"> {
   loading?: boolean;
   fullWidth?: boolean;
   leftIcon?: React.ReactNode;
+  style?: ViewStyle;
 }
 
 const HEIGHT: Record<Size, number> = { lg: 56, md: 48, sm: 40 };
@@ -30,6 +32,7 @@ export function Button({
   disabled,
   fullWidth = true,
   leftIcon,
+  style,
   ...rest
 }: ButtonProps) {
   const isDisabled = disabled || loading;
@@ -60,6 +63,7 @@ export function Button({
           opacity: isDisabled ? 0.5 : 1,
           alignSelf: fullWidth ? "stretch" : "center",
         },
+        style,
       ]}
       {...rest}
     >

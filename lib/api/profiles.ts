@@ -43,6 +43,22 @@ export async function getReviewsForUser(
   return (data ?? []) as unknown as ReviewWithReviewer[];
 }
 
+export async function searchProfiles(
+  query: string,
+  excludeId?: string,
+): Promise<Pick<Profile, "id" | "full_name" | "avatar_url" | "sorority">[]> {
+  let q = supabase
+    .from("profiles")
+    .select("id, full_name, avatar_url, sorority")
+    .order("full_name", { ascending: true })
+    .limit(30);
+  if (query.trim()) q = q.ilike("full_name", `%${query.trim()}%`);
+  if (excludeId) q = q.neq("id", excludeId);
+  const { data, error } = await q;
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function createReview(input: {
   rental_id: string;
   reviewer_id: string;
